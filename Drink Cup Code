@@ -1,0 +1,43 @@
+  int fsrAnalogPin = 0;
+  int fsrReading;
+  int RELAY = 11;
+  int flag = 0;
+  int flag2 = 0;
+  unsigned int TIME = 0;
+  int Testthing = 0;
+void setup() {
+  pinMode(RELAY, OUTPUT);
+  pinMode(fsrReading, INPUT);
+  digitalWrite(13, HIGH);
+  delay(1000);
+  digitalWrite(13, LOW);
+  delay(1000);
+  digitalWrite(13, HIGH); 
+}
+
+void loop() {
+    while(true){
+  fsrReading = analogRead(fsrAnalogPin);
+  Testthing = Testthing + 1;
+
+  if(fsrReading < 800){ //check if pressure sensor has been exceeded
+     if(flag != 1){
+      TIME = millis(); //keep track of time
+     }
+     flag = 1; //set time flag (sets the flag as un retraceble)
+     if(((millis()-TIME) > 4000)){//4 second timer
+      digitalWrite(RELAY,LOW); //pump off, time expired
+     }
+     else{
+      digitalWrite(RELAY,HIGH); //pump on
+     }
+  }
+  
+  if(fsrReading > 850){ // flag resets when pressure is released
+  flag = 0; //flag reset (allows a new time to be set)
+  digitalWrite(RELAY,LOW); //pump off
+  delay(2000); //two second delay
+  }
+    Testthing= Testthing -1;
+  }
+}
