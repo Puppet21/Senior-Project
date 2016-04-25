@@ -116,19 +116,30 @@ int main(int argc, char **argv){
   }
   FILE *logFile;
   FILE *dataFile;
-  logFile = fopen(argv[1], "r");
-  int timeH, timeM, timeS, volt, poten, water, pf;
+
+  
+  
+  if((logFile = fopen(argv[1], "r+"))==NULL){
+    printf("File not valid");
+    return(-1);
+  }
+  int timeH, timeM, timeS, volt, poten, water, pf = 0;
+
   //format is [timeH timeM timeS volt poten water pf]
   //          [timeH timeM timeS volt poten water pf]
   //          [timeH timeM timeS volt poten water pf]
   //          [timeH timeM timeS volt poten water pf]
+
   while(!feof (logFile)){
-  fscanf(logFile, "%i %i %i %i %i %i %i \n", &timeH, &timeM, &timeS, &volt, &poten, &water, &pf); 
-  printf("%i", timeH);
+    fscanf(logFile, "%i %i %i %i %i %i %i \n", &timeH, &timeM, &timeS, &volt, &poten, &water, &pf); 
+    printf("%i\n",volt);
+    
+    
   }
   
-  
-  
+
+
+
   fclose(logFile);
 }
 
