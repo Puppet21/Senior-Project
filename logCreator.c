@@ -111,7 +111,7 @@ int main(int argc, char **argv){
   if(argc != 2){
     printf("Hello! This program takes a valid Liberty Cup data file as imput and nothing else.\n");
     printf("./logCreator myData.txt\n");
-    printf("Results are a file.");
+    printf("Results are a file.\n");
     return 0;
   }
   FILE *logFile;

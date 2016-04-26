@@ -124,7 +124,6 @@ int main(int argc, char **argv){
     return(-1);
   }
   int timeH, timeM, timeS, volt, poten, water, pf = 0;
-
   //format is [timeH timeM timeS volt poten water pf]
   //          [timeH timeM timeS volt poten water pf]
   //          [timeH timeM timeS volt poten water pf]
