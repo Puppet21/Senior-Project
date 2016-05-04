@@ -6,6 +6,10 @@
  *
  */
 
+/*
+ * Zero out resets all data points on a failure
+ */
+
 
 
 
@@ -79,7 +83,7 @@ int potenCheck(int poten){
 
 
 int waterCheck(int water){
-  if(water > 2 || water < 0){
+  if(water > 24 || water < 0){
     return -1;
   }
   else{
@@ -111,7 +115,7 @@ int main(int argc, char **argv){
   if(argc != 2){
     printf("Hello! This program takes a valid Liberty Cup data file as imput and nothing else.\n");
     printf("./logCreator myData.txt\n");
-    printf("Results are a file.");
+    printf("Results are a file.\n");
     return 0;
   }
   FILE *logFile;
@@ -123,19 +127,34 @@ int main(int argc, char **argv){
     printf("File not valid");
     return(-1);
   }
-  int timeH, timeM, timeS, volt, poten, water, pf = 0;
+  int timeH, timeM, timeS, volt, poten, pf = 0;
+  double water =0;
   //format is [timeH timeM timeS volt poten water pf]
   //          [timeH timeM timeS volt poten water pf]
   //          [timeH timeM timeS volt poten water pf]
   //          [timeH timeM timeS volt poten water pf]
 
-  while(!feof (logFile)){
-    fscanf(logFile, "%i %i %i %i %i %i %i \n", &timeH, &timeM, &timeS, &volt, &poten, &water, &pf); 
-    printf("%i\n",volt);
+  int x;
+  for(x =0;x<14;x++){
+    fscanf(logFile, "%i %i %i %i %i %lf %i \n", &timeH, &timeM, &timeS, &volt, &poten, &water, &pf); 
     
-    
+    if( timeCheck(timeH,timeM,timeS) != true){
+      printf("time log was incorrect. Data cannot be used.\n Check to see if the device is damaged!\n");
+    }
+    if( voltCheck(volt) == -1){
+      printf("Error on voltage reading.\n Check to see if the device is damaged.\n");
+    }
+    if(potenCheck(poten) == -1){
+      printf("Error on potentiameter.\n Replace drink cap.\n");
+    }
+    if(waterCheck(water) == -1){
+      printf("Error on water.\n Cup damaged, replace soon.\n");
+    }
+    if(pf ==1){
+      printf("Purge flag found.\n");
+    }
   }
-  
+  //REQFILE OUT WRITER.  
 
 
 
