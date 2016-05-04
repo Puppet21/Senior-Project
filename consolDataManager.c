@@ -5,7 +5,6 @@
 void graphOUT(int x, int* y){
   
   FILE *pipe_out = popen("gnuplot","w");
-  
   fputs("set terminal png\n", pipe_out);
   fputs("plot '-' u 1:2\n", pipe_out);
   int f = 0;
@@ -64,13 +63,11 @@ int aw(int timeTotal, double* Water, int slice){ //average water
 
   for(x=0; x <slice; x++){
     Avg = Avg + Water[x];
-    printf("Avg = %lf \n", Avg);
   }
-  printf("slice = %i\n",slice);
-  Avg = Avg/slice; 
-  printf("Timetot = %i\n",timeTotal);
-  Avg = Avg/timeTotal;
-  printf("Average Water over time RESULT = %lf\n", Avg);
+ 
+  Avg = Avg/slice;  
+  
+  printf("Average Water = %lf\n", Avg);
   return 0;
 }
 
@@ -81,11 +78,11 @@ int fsrot(int slice, int *fsr){ //method exists so additional functions can be a
 }
 
 int TimeTot(int timeH, int timeM, int timeS){ //Unused due to to time slice being easier
-  printf("timeH = %i\n", timeH);
+ 
   timeM = timeM + timeH *60;
-  printf("timeM = %i\n", timeM);
+ 
   timeS = timeS + timeM *60;
-  printf("timeS = %i\n", timeS);
+ 
   return timeS;
 }
 
@@ -152,13 +149,11 @@ int main(int argc, char** argv){
     }
   }
   else if(strcmp(argv[3], "w")==0){
-    wlot(IDs, Water);
-    
+    wlot(IDs, Water);    
   }
   else if(strcmp(argv[3], "aw")==0){
     printf("Average water level.\n");
-    printf("IDs = %i\n",IDs);
-    aw(IDs, Water, IDs); //Possible Glitch site, Requires further testing, May give grossly incorrect numbers.
+    aw(IDs, Water, IDs); 
   }
   else if(strcmp(argv[3],"fsr")==0){
     printf("Fsr reading over time slice graph.\n"); //Suggested for small time slice,
